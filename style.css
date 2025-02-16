@@ -1,0 +1,36 @@
+/* style.css (or within a <style> tag) */
+.navbar-collapse {
+    display: flex; /* Ensure the navbar-collapse is a flex container */
+    flex-direction: row; /* Arrange items horizontally */
+    align-items: center; /* Vertically align items */
+    justify-content: space-between; /* Distribute space between logo and nav */
+}
+
+/* Optional: Adjust spacing between logo and nav items */
+.navbar-nav {
+  margin-left: auto; /* Push the nav to the right */
+}
+
+.navbar-nav .nav-item {
+  margin-left: 10px; /* Example spacing, adjust as needed */
+}
+
+/* Optional: Style the logo */
+.navbar-collapse img {
+    max-height: 50px; /* Example height, adjust as needed */
+    /* Add other logo styles here */
+}
+
+
+/* style du bouton de recherche */
+
+.search-button {
+    color: blue; /* Couleur du texte (facultatif) */
+    border-color: blue; /* Couleur de la bordure */
+}
+
+.search-button:hover {
+    background-color: blue; /* Couleur de fond au survol */
+    color: white; /* Couleur du texte au survol (pour un meilleur contraste) */
+    border-color: blue;
+}

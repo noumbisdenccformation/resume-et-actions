@@ -65,3 +65,73 @@ inscriptionForm.addEventListener('submit', (event) => {
         // Afficher un message d'erreur à l'utilisateur
     });
 });
+
+
+/*vérification de contrale humaine*/
+
+inscriptionForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    // Récupérer le jeton hCaptcha
+    hcaptcha.execute('1ee86db0-7a28-4d86-b438-aabc03448024')
+        .then(function(token) {
+            // Envoyer les données au serveur, y compris le jeton
+            fetch('/votre-route-pour-inscription', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ nom, email, telephone, password, 'h-captcha-response': token })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Traiter la réponse du serveur
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+            });
+        });
+});
+
+
+
+/* script pour effectuer la recherche du livre */
+
+document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('searchInput'); // Use getElementById
+    const searchButton = document.getElementById('searchButton'); // Use getElementById
+    const bookSections = document.querySelectorAll('#resume .row');
+
+    searchButton.addEventListener('click', () => {
+        const searchTerm = searchInput.value.toLowerCase();
+
+        bookSections.forEach(section => {
+            const cards = section.querySelectorAll('.card');
+            let sectionHasMatch = false;
+
+            cards.forEach(card => {
+                const title = card.querySelector('.card-title').textContent.toLowerCase();
+                const author = card.querySelector('.card-text').textContent.toLowerCase();
+
+                if (title.includes(searchTerm) || author.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    sectionHasMatch = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            if (sectionHasMatch) {
+                section.style.display = 'flex';
+            } else {
+                section.style.display = 'none';
+            }
+        });
+    });
+
+    searchInput.addEventListener('keyup', (event) => {
+        if (event.key === 'Enter') {
+            searchButton.click();
+        }
+    });
+});
