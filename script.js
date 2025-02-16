@@ -1,99 +1,29 @@
-const loginLink = document.getElementById('login-link');
-const registerLink = document.getElementById('register-link');
+document.addEventListener('DOMContentLoaded', () => {
+    const connexionForm = document.getElementById('connexionForm');
+    const emailOrPhoneInput = document.getElementById('emailOrPhone');
+    const errorMessage = document.getElementById('errorMessage');
+    const contenuCache = document.getElementById('contenuCache'); // L'ID de la section à afficher
 
-loginLink.addEventListener('click', () => {
-    // Afficher la modale de connexion
-    // Il n'y a pas besoin de code JavaScript ici, 
-    // car l'attribut data-bs-toggle="modal" 
-    // gère automatiquement l'ouverture de la modale
-});
+    connexionForm.addEventListener('submit', (event) => {
+        event.preventDefault(); // Empêcher la soumission par défaut du formulaire
 
-registerLink.addEventListener('click', () => {
-    // Afficher la modale d'inscription
-    // Il n'y a pas besoin de code JavaScript ici, 
-    // car l'attribut data-bs-toggle="modal" 
-    // gère automatiquement l'ouverture de la modale
-});
+        const inputValue = emailOrPhoneInput.value;
 
-// Fonction pour envoyer les données du formulaire (exemple avec Fetch API)
-function submitForm(url, data) {
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Traiter la réponse du serveur
-        console.log(data);
-    })
-    .catch(error => {
-        console.error('Erreur:', error);
-    });
-}
-
-//gestion de recupération des paramètres d'inscription
-
-const inscriptionForm = document.getElementById('inscriptionForm');
-
-inscriptionForm.addEventListener('submit', (event) => {
-    event.preventDefault(); // Empêche le rechargement de la page
-
-    const nom = document.getElementById('nom').value;
-    const email = document.getElementById('email').value;
-    const telephone = document.getElementById('telephone').value;
-    const password = document.getElementById('password').value;
-
-    // Envoyer les données au serveur
-    fetch('/votre-route-pour-inscription', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ nom, email, telephone, password })
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Traiter la réponse du serveur
-        console.log(data);
-        // Afficher un message de succès ou d'erreur à l'utilisateur
-    })
-    .catch(error => {
-        console.error('Erreur:', error);
-        // Afficher un message d'erreur à l'utilisateur
+        // Logique de vérification (exemple) :
+        if (inputValue === 'test@example.com' || inputValue === '1234567890') {
+            // Utilisateur vérifié, afficher le contenu
+            contenuCache.style.display = 'block'; // Afficher la section
+            $('#modalConnexion').modal('hide'); // Fermer la modale
+            errorMessage.style.display = 'none'; // Masquer le message d'erreur
+        } else {
+            // Utilisateur non vérifié, afficher un message d'erreur
+            errorMessage.textContent = 'Email ou téléphone incorrect.';
+            errorMessage.style.display = 'block';
+        }
     });
 });
 
-
-/*vérification de contrale humaine*/
-
-inscriptionForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    // Récupérer le jeton hCaptcha
-    hcaptcha.execute('1ee86db0-7a28-4d86-b438-aabc03448024')
-        .then(function(token) {
-            // Envoyer les données au serveur, y compris le jeton
-            fetch('/votre-route-pour-inscription', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ nom, email, telephone, password, 'h-captcha-response': token })
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Traiter la réponse du serveur
-            })
-            .catch(error => {
-                console.error('Erreur:', error);
-            });
-        });
-});
-
-
+/* Fin du Code javascript pour logique de vérification  */
 
 /* script pour effectuer la recherche du livre */
 
